@@ -11,9 +11,9 @@ else
   rm -rf /tmp/usr
 fi
 
-ODOO_GITUSER=OCA
-ODOO_GITREPO=OCB
-ODOO_VERSION=8.0
+ODOO_GITUSER=odoo
+ODOO_GITREPO=odoo
+ODOO_VERSION=9.0
 ODOO_URL=https://github.com/${ODOO_GITUSER}/${ODOO_GITREPO}/tarball/${ODOO_VERSION}
 https://github.com/${ODOO_GITUSER}/${ODOO_GITREPO}.git
 ODOO_ADMIN_PASSWD=$(python -c "import uuid; print uuid.uuid4()")
@@ -22,14 +22,15 @@ export ODOO_ADMIN_PASSWD
 
 cd $OPENSHIFT_DATA_DIR/
 
-if [ -d "odoo-repo" ]; then
+if [ -d "~/app-root/data/odoo-repo" ]; then
     echo "Odoo already installed"
 else
     echo "Downloading Odoo."
-    wget https://github.com/OCA/OCB/tarball/9.0 -O /tmp/odoo.tar.gz
-    tar -zxvf /tmp/odoo.tar.gz -C ~/app-root/data
-    ln -s ~/${ODOO_GITUSER}-${ODOO_GITREPO}* ~/app-root/data/odoo-repo
-    rm ~/${ODOO_GITUSER}-${ODOO_GITREPO}*
+    wget https://github.com/odoo/odoo/tarball/9.0 /tmp/odoo9.tar.gz
+    #wget https://github.com/OCA/OCB/tarball/9.0 -O /tmp/odoo.tar.gz
+    tar -zxvf /tmp/odoo9.tar.gz -C ~/app-root/data
+    ln -s ~/app-root/data/${ODOO_GITUSER}-${ODOO_GITREPO}* ~/app-root/data/odoo-repo
+    rm ~/app-root/data/${ODOO_GITUSER}-${ODOO_GITREPO}*
     rm -r ~/app-root/data/odoo-repo/doc
     rm -r ~/app-root/data/odoo-repo/setup
 fi
